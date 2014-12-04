@@ -31,6 +31,16 @@
         var left = $(window).scrollLeft();
         return left >= $(element).offset().left + $(element).width() - settings.threshold;
     };
+
+    $.belowthemiddle = function(element, settings) {
+        var middle = $(window).scrollTop() + $(window).height()/2;
+        return middle <= $(element).offset().top - settings.threshold;
+    };
+
+    $.abovethemiddle = function(element, settings) {
+        var middle = $(window).scrollTop() + $(window).height()/2;
+        return middle >= $(element).offset().top - settings.threshold;
+    }
     
     $.inviewport = function(element, settings) {
         return !$.rightofscreen(element, settings) && !$.leftofscreen(element, settings) && !$.belowthefold(element, settings) && !$.abovethetop(element, settings);
@@ -39,6 +49,12 @@
     $.extend($.expr[':'], {
         "below-the-fold": function(a, i, m) {
             return $.belowthefold(a, {threshold : 0});
+        },
+        "below-the-middle": function(a, i, m){
+            return $.belowthemiddle(a, {threshold : 0});
+        },
+        "above-the-middle": function(a, i, m){
+            return $.abovethemiddle(a, {threshold : 0});
         },
         "above-the-top": function(a, i, m) {
             return $.abovethetop(a, {threshold : 0});
